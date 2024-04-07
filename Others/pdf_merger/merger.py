@@ -8,11 +8,6 @@
 import os
 from PyPDF2 import PdfWriter, PdfReader
 
-try:
-    os.mkdir('pdfs')
-except:
-    pass
-
 pdf_files = [file.name for file in os.scandir('pdfs') if file.is_file()]
 pdf_files = sorted(pdf_files)
 pdf_writer = PdfWriter()
