@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 
 import pandas as pd
 import numpy as np
@@ -13,11 +11,9 @@ import matplotlib.pyplot as plt
 #it can take up to 5s
 
 
-# In[2]:
-
 
 """
-Your should have two files: xtb.xyz with trajectories (if it has different name - change it below), and
+You should have two files: xtb.xyz with trajectories (if it has a different name - change it below), and
 the md input file (in my case it's md_input.inp). You need ***.inp file to read the total time 
 and the time dump (not step - these are different times).
 In case you want to set it manually, just comment that part and create a numpy array time as following:
@@ -101,7 +97,7 @@ df_e = df_e['{}'.format(atoms)].str.replace(' +', ' ', regex=True).str.split(' '
 df_e = df_e.astype('float64')
 
 
-# In[3]:
+
 
 
 # Creating numpy arrays
@@ -114,7 +110,7 @@ arr_cn = np.array(df_cn)
 
 # Math functions module.
 
-# In[4]:
+
 
 
 def vectors(arr1, arr2):
@@ -135,7 +131,6 @@ def angle(arr1, arr2):
     return result
 
 
-# In[5]:
 
 
 #CNC alpha angle
@@ -148,7 +143,7 @@ vector_N_Cs = vectors(arr_n, arr_cs)
 alpha_ang = np.around(angle(vector_N_Cn, vector_N_Cs), decimals=1)
 
 
-# In[6]:
+
 
 
 #CSC beta angle
@@ -162,35 +157,29 @@ beta_ang = np.around(angle(vector_S_Cs, vector_S_Cn), decimals=1)
         
 
 
-# In[7]:
+
 
 
 #calculating distances
 ns_dist = np.around(vector_len(vectors(arr_n, arr_s)), decimals=1)
 
 
-# In[8]:
-
 
 #combine to a single array
 stacked = np.column_stack((time, alpha_ang, beta_ang, ns_dist))
 
 
-# In[9]:
 
 
 new_df = pd.DataFrame(data=stacked, columns=['time', 'alpha', 'beta', 'distance'])
 new_df['energy'] = df_e
 
 
-# In[10]:
 
 
 # saves the data to excel
 new_df.to_excel('output.xlsx')
 
-
-# In[11]:
 
 
 #Limits for distance in graphs 
@@ -199,7 +188,6 @@ min_dist = new_df["distance"].min() - 2
 max_dist = new_df["distance"].max() + 2
 
 
-# In[12]:
 
 
 #Limits of angles for zoomed graphs
@@ -210,8 +198,6 @@ min_beta = new_df["beta"].min() - 10
 max_alpha = new_df["alpha"].max() + 10
 max_beta = new_df["beta"].max() + 10
 
-
-# In[13]:
 
 
 """
@@ -239,7 +225,7 @@ plt.gcf().set_size_inches(8, 8)
 plt.savefig('scatter_full.png', dpi=600)
 
 
-# In[14]:
+
 
 
 sns.scatterplot(data=new_df, x="alpha", y="beta", hue="distance")
@@ -251,7 +237,6 @@ plt.gcf().set_size_inches(8, 8)
 plt.savefig('scatter_hue.png', dpi=600)
 
 
-# In[15]:
 
 
 """
@@ -273,8 +258,6 @@ plt.gcf().set_size_inches(10, 8)
 plt.savefig('heat_full.png', dpi=600)
 
 
-# In[16]:
-
 
 sns.lineplot(data=new_df, x="time", y="distance", color='g')
 plt.xlim(0, new_df['time'].max())
@@ -288,7 +271,6 @@ plt.gcf().set_size_inches(8, 8)
 plt.savefig('line_full.png', dpi=600)
 
 
-# In[19]:
 
 
 sns.lineplot(data=new_df, x="time", y="alpha", color='g')
@@ -303,8 +285,6 @@ plt.gcf().set_size_inches(8, 8)
 plt.savefig('alpha_full.png', dpi=600)
 
 
-# In[20]:
-
 
 sns.lineplot(data=new_df, x="time", y="beta", color='g')
 plt.xlim(0, new_df['time'].max())
@@ -317,8 +297,6 @@ plt.gcf().set_size_inches(8, 8)
     
 plt.savefig('beta_full.png', dpi=600)
 
-
-# In[22]:
 
 
 sns.lineplot(data=new_df, x="time", y="energy", color='b')
