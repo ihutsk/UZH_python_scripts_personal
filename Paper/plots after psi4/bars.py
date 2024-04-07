@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+
 
 
 import pandas as pd
@@ -10,43 +10,23 @@ import seaborn as sns
 sns.set_context('notebook')
 
 
-# In[2]:
-
 
 df = pd.read_excel('pair3_overview.xlsx')
 
-
-# In[3]:
-
-
-df.columns
-
-
-# In[4]:
 
 
 df = df.T
 
 
-# In[5]:
-
 
 df.reset_index(inplace=True)
-
-
-# In[6]:
 
 
 df.columns = df.iloc[0]
 
 
-# In[7]:
-
 
 df=df.drop(0, axis=0)
-
-
-# In[8]:
 
 
 fig, ax = plt.subplots(figsize=(2,5), dpi=100)
@@ -97,11 +77,9 @@ ax.text(1.55, df.loc[3, a]+5, round(df.loc[3, a], 1), **font_dict)
 ax.text(2.35, df.loc[1, a]-10, round(df.loc[1, a], 1), **font_dict)
 ax.text(3.45, df.loc[5, a]-10, round(df.loc[5, a], 1), **font_dict)
 
-plt.savefig('pair4a_naked.svg', format='svg', dpi=600, bbox_inches='tight')
+plt.savefig(f'pair_{a}.svg', format='svg', dpi=600, bbox_inches='tight')
 plt.show()
 
-
-# In[9]:
 
 
 df
