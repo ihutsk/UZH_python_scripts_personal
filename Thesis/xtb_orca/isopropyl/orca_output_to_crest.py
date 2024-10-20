@@ -2,13 +2,7 @@
 import os, re
 import pandas as pd
 
-# Enter number of atoms in your structure to `num_atoms`.
-
-num_atoms = 252
-
-
 df = pd.read_excel('comparison.xlsx')
-
 
 # list of folders
 folders = []
@@ -25,6 +19,7 @@ with open('ensemble_after_orca_with_duplicates.xyz', 'a', encoding='utf-8') as f
         xyz_name = [file for file in os.listdir(folder) if re.search(pattern=pattern_xyz, string=file)][0]
         with open(f'{folder}/{xyz_name}', 'r', encoding='utf-8') as xyz:
             lines = xyz.readlines()
+            num_atoms = lines[0]
             coords = lines[2:]
             energy = str(df[df['name'] == folder].iloc[0,5])
             f.write(f'{num_atoms}\n{energy}\n')
