@@ -1,1 +1,1 @@
-## This folder contains python scripts for iopropyl pair P6
+## This folder contains python scripts for ion pair P6
